@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuckiHome</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+        }
+        .container {
+            width: 100vw; /* Ancho igual al ancho de la ventana */
+            height: 100vh; /* Altura igual a la altura de la ventana */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f3f3f3;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="image"] {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        .buttons-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .button {
+            width: calc(16.66% - 10px); /* 16.66% for 6 buttons, minus margin */
+            padding: 10px;
+            font-size: 16px;
+            text-align: center;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+        .button img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .button span {
+            display: block;
+            margin-top: 5px;
+        }
+        .button:hover {
+            background-color: #005f79;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LuckiHome</h1>
+        <form action="https://www.google.com/search" method="GET" target="_blank">
+            <input type="image" src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg" alt="Buscar">
+            <input type="text" name="q" placeholder="Buscar en Google...">
+        </form>
+        <div class="buttons-container">
+            <button class="button" onclick="window.location.href='https://web.whatsapp.com'">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1200px-WhatsApp.svg.png" alt="WhatsApp">
+                <span>WhatsApp</span>
+            </button>
+            <button class="button" onclick="window.location.href='https://www.spotify.com'">
+                <img src="https://developer.spotify.com/images/guidelines/design/icon3@2x.png" alt="Spotify">
+                <span>Spotify</span>
+            </button>
+            <button class="button" onclick="window.location.href='https://github.com/lucas-spinelli?tab=repositories'">
+                <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub">
+                <span>GitHub</span>
+            </button>
+            <button class="button" onclick="window.location.href='https://vercel.com'">
+                <img src="https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png" alt="Vercel">
+                <span>Vercel</span>
+            </button>
+            <button class="button" onclick="window.location.href='https://codepen.io/pen'">
+                <img src="https://blog.codepen.io/wp-content/uploads/2012/06/Button-Fill-Black-Large.png" alt="CodePen">
+                <span>CodePen</span>
+            </button>
+            <button class="button" onclick="window.location.href='https://chat.openai.com'">
+                <img src="https://1000marcas.net/wp-content/uploads/2023/02/ChatGPT-Logo-thmb-1280x720.png" alt="ChatGPT">
+                <span>ChatGPT</span>
+            </button>
+        </div>
+    </div>
+</body>
+</html>
