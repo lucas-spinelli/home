@@ -7,8 +7,7 @@
     <title>LuckiApps</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Luckiest+Guy&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&family=Luckiest+Guy&display=swap');
         * {
             box-sizing: border-box;
             margin: 0;
@@ -39,7 +38,6 @@
 
         h1 {
             font-family: "Luckiest Guy", cursive;
-            font-weight: 400;
             font-size: 55px;
             letter-spacing: 2px;
             color: #fff;
@@ -80,6 +78,11 @@
 
         .menu-overlay a {
             display: inline-block;
+            color: #ffffff;
+        }
+
+        .menu-overlay a i {
+            font-size: 2em;
         }
 
         .search-bar {
@@ -89,16 +92,11 @@
             border-radius: 50px;
             padding: 10px 20px;
             font-size: 18px;
+            font-weight: bold;
             color: #ffffffaa;
             background-color: rgba(255, 255, 255, 0.1);
-            transition: background-color 0.3s, box-shadow 0.3s;
             margin-top: 20px;
             width: 400px;
-        }
-
-        .search-bar:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .search-bar input {
@@ -114,47 +112,55 @@
         .search-bar button {
             background: none;
             border: none;
-            outline: none;
             cursor: pointer;
             color: #ffffffaa;
             font-size: 18px;
         }
 
-        .search-modal {
+        .modal {
+            display: none;
             position: fixed;
             top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 10%;
             width: 80%;
-            height: 70%;
-            background: rgba(0, 0, 0, 0.9);
+            height: 80%;
+            background: #1e3c72;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            display: none;
-            flex-direction: column;
-            align-items: flex-end;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-            z-index: 10;
+            z-index: 1000;
         }
 
-        .search-modal iframe {
-            width: 100%;
-            height: 90%;
-            border: none;
+        .modal.active {
+            display: block;
         }
 
-        .search-modal.active {
+        .modal-header {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #2a5298;
+            color: #fff;
         }
 
-        .close-btn {
-            margin: 10px;
+        .modal-header h2 {
             font-size: 20px;
-            color: #ffffff;
-            background: transparent;
-            border: none;
-            cursor: pointer;
+            margin: 0;
         }
+
+        .close-button {
+            font-size: 24px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .modal-content {
+            width: 100%;
+            height: calc(100% - 50px);
+            border: none;
+        }
+
     </style>
 </head>
 <body>
@@ -164,6 +170,7 @@
             <i class="fas fa-bars menu-icon" onclick="toggleMenu()"></i>
         </div>
 
+        <!-- Formulario de búsqueda -->
         <form class="search-bar" onsubmit="openSearchModal(event)">
             <input type="text" id="searchQuery" placeholder="Buscar en Google" required>
             <button type="submit">
@@ -172,45 +179,46 @@
         </form>
     </div>
 
+    <!-- Menú lateral -->
     <div class="menu-overlay" id="menuOverlay">
-      <a href="https://google.com" target="_blank"><i class="fa-brands fa-google fa-2xl" style="color: #ffffff;"></i></a>
-        <a href="https://codepen.io/pen" target="_blank"><i class="fa-brands fa-codepen fa-2xl" style="color: #ffffff;"></i></a>
-        <a href="https://github.com/lucas-spinelli?tab=repositories" target="_blank"><i class="fa-brands fa-github fa-2xl" style="color: #ffffff;"></i></a>
-        <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram fa-2xl" style="color: #ffffff;"></i></a>
-        <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter fa-2xl" style="color: #ffffff;"></i></a>
-        <a href="https://threads.net" target="_blank"><i class="fa-brands fa-threads fa-2xl" style="color: #ffffff;"></i></a>
-        <a href="https://www.youtube.com/@lucas_spinelli" target="_blank"><i class="fa-brands fa-youtube fa-2xl" style="color: #ffffff;"></i>
-        <a href="https://classroom.google.com/u/2/" target="_blank"><i class="fa-solid fa-school fa-2xl" style="color: #ffffff;"></i>
-        <a href="https://web.whatsapp.com/" target="_blank"><i class="fa-brands fa-whatsapp fa-2xl" style="color: #ffffff;"></i>
-        <!-- Aquí el contenido de los enlaces del menú -->
+        <a href="https://google.com" target="_blank"><i class="fa-brands fa-google"></i></a>
+        <a href="https://codepen.io/pen" target="_blank"><i class="fa-brands fa-codepen"></i></a>
+        <a href="https://github.com/lucas-spinelli?tab=repositories" target="_blank"><i class="fa-brands fa-github"></i></a>
+        <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="https://threads.net" target="_blank"><i class="fa-brands fa-threads"></i></a>
+        <a href="https://www.youtube.com/@lucas_spinelli" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://classroom.google.com/u/2/" target="_blank"><i class="fa-solid fa-school"></i></a>
+        <a href="https://web.whatsapp.com/" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
     </div>
 
-    <div class="search-modal" id="searchModal">
-        <button class="close-btn" onclick="closeSearchModal()">
-            <i class="fas fa-times"></i>
-        </button>
-        <iframe id="searchIframe"></iframe>
+    <!-- Modal de búsqueda -->
+    <div class="modal" id="searchModal">
+        <div class="modal-header">
+            <h2>Resultados de Búsqueda</h2>
+            <span class="close-button" onclick="closeSearchModal()">&times;</span>
+        </div>
+        <iframe id="searchIframe" class="modal-content"></iframe>
     </div>
 
     <script>
         function toggleMenu() {
-            const menuOverlay = document.getElementById('menuOverlay');
-            menuOverlay.classList.toggle('active');
+            document.getElementById('menuOverlay').classList.toggle('active');
         }
 
         function openSearchModal(event) {
             event.preventDefault();
             const query = document.getElementById('searchQuery').value;
-            const searchModal = document.getElementById('searchModal');
-            const searchIframe = document.getElementById('searchIframe');
-
-            searchIframe.src = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-            searchModal.classList.add('active');
+            const apiKey = 'AIzaSyCKvXKZvqYOK26VnHjzR2SZKJPOc9x7Xgk';
+            const cx = 'YOUR_CX_ID';  // Cambia 'YOUR_CX_ID' por tu ID de búsqueda personalizada.
+            const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${query}`;
+            document.getElementById('searchIframe').src = url;
+            document.getElementById('searchModal').classList.add('active');
         }
 
         function closeSearchModal() {
-            const searchModal = document.getElementById('searchModal');
-            searchModal.classList.remove('active');
+            document.getElementById('searchModal').classList.remove('active');
+            document.getElementById('searchIframe').src = '';
         }
     </script>
 </body>
