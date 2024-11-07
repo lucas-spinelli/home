@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://kit.fontawesome.com/beb98df05a.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/beb98df05a.js" crossorigin="anonymous"></script>
     <title>LuckiApps</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Luckiest+Guy&display=swap');
-        /* Estilos Generales */
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Luckiest+Guy&display=swap');
+        
         * {
             box-sizing: border-box;
             margin: 0;
@@ -30,7 +30,6 @@
             position: relative;
         }
 
-        /* Encabezado */
         .header {
             display: flex;
             align-items: center;
@@ -41,15 +40,11 @@
         h1 {
             font-family: "Luckiest Guy", cursive;
             font-weight: 400;
-            font-style: normal;
             font-size: 55px;
-            font-weight: bold;
             letter-spacing: 2px;
             color: #fff;
-            margin: 0;
         }
 
-        /* Menú */
         .menu-icon {
             font-size: 45px;
             color: #fff;
@@ -61,7 +56,6 @@
             transform: scale(1.1);
         }
 
-        /* Menu Overlay */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -88,21 +82,6 @@
             display: inline-block;
         }
 
-        .menu-overlay img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #fff;
-            padding: 10px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .menu-overlay img:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
-        }
-
-        /* Barra de Búsqueda */
         .search-bar {
             display: inline-flex;
             align-items: center;
@@ -110,7 +89,6 @@
             border-radius: 50px;
             padding: 10px 20px;
             font-size: 18px;
-            font-weight: bold;
             color: #ffffffaa;
             background-color: rgba(255, 255, 255, 0.1);
             transition: background-color 0.3s, box-shadow 0.3s;
@@ -140,13 +118,43 @@
             cursor: pointer;
             color: #ffffffaa;
             font-size: 18px;
-            transition: color 0.3s;
         }
 
-        .search-bar button:hover {
-            color: #fff;
+        .search-modal {
+            position: fixed;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 70%;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            align-items: flex-end;
+            overflow: hidden;
+            z-index: 10;
         }
 
+        .search-modal iframe {
+            width: 100%;
+            height: 90%;
+            border: none;
+        }
+
+        .search-modal.active {
+            display: flex;
+        }
+
+        .close-btn {
+            margin: 10px;
+            font-size: 20px;
+            color: #ffffff;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -156,8 +164,8 @@
             <i class="fas fa-bars menu-icon" onclick="toggleMenu()"></i>
         </div>
 
-        <form class="search-bar" action="https://www.google.com/search" method="get" target="_blank">
-            <input type="text" name="q" placeholder="Buscar en Google" required>
+        <form class="search-bar" onsubmit="openSearchModal(event)">
+            <input type="text" id="searchQuery" placeholder="Buscar en Google" required>
             <button type="submit">
                 <i class="fas fa-search"></i>
             </button>
@@ -165,7 +173,7 @@
     </div>
 
     <div class="menu-overlay" id="menuOverlay">
-        <a href="https://google.com" target="_blank"><i class="fa-brands fa-google fa-2xl" style="color: #ffffff;"></i></a>
+      <a href="https://google.com" target="_blank"><i class="fa-brands fa-google fa-2xl" style="color: #ffffff;"></i></a>
         <a href="https://codepen.io/pen" target="_blank"><i class="fa-brands fa-codepen fa-2xl" style="color: #ffffff;"></i></a>
         <a href="https://github.com/lucas-spinelli?tab=repositories" target="_blank"><i class="fa-brands fa-github fa-2xl" style="color: #ffffff;"></i></a>
         <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram fa-2xl" style="color: #ffffff;"></i></a>
@@ -174,10 +182,35 @@
         <a href="https://www.youtube.com/@lucas_spinelli" target="_blank"><i class="fa-brands fa-youtube fa-2xl" style="color: #ffffff;"></i>
         <a href="https://classroom.google.com/u/2/" target="_blank"><i class="fa-solid fa-school fa-2xl" style="color: #ffffff;"></i>
         <a href="https://web.whatsapp.com/" target="_blank"><i class="fa-brands fa-whatsapp fa-2xl" style="color: #ffffff;"></i>
+        <!-- Aquí el contenido de los enlaces del menú -->
+    </div>
+
+    <div class="search-modal" id="searchModal">
+        <button class="close-btn" onclick="closeSearchModal()">
+            <i class="fas fa-times"></i>
+        </button>
+        <iframe id="searchIframe"></iframe>
+    </div>
+
     <script>
         function toggleMenu() {
             const menuOverlay = document.getElementById('menuOverlay');
             menuOverlay.classList.toggle('active');
+        }
+
+        function openSearchModal(event) {
+            event.preventDefault();
+            const query = document.getElementById('searchQuery').value;
+            const searchModal = document.getElementById('searchModal');
+            const searchIframe = document.getElementById('searchIframe');
+
+            searchIframe.src = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+            searchModal.classList.add('active');
+        }
+
+        function closeSearchModal() {
+            const searchModal = document.getElementById('searchModal');
+            searchModal.classList.remove('active');
         }
     </script>
 </body>
